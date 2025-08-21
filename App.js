@@ -3,11 +3,11 @@
  */
 
 import React from 'react';
-import { 
-  StatusBar, 
-  StyleSheet, 
-  useColorScheme, 
-  View, 
+import {
+  StatusBar,
+  StyleSheet,
+  useColorScheme,
+  View,
   Text,
   SafeAreaView
 } from 'react-native';
@@ -15,22 +15,8 @@ import {
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? '#333' : '#F5FCFF',
-  };
-
   return (
-    <SafeAreaView style={[styles.container, backgroundStyle]}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <View style={styles.content}>
-        <Text style={[styles.helloWorld]}>
-          Hello World!
-        </Text>
-      </View>
-    </SafeAreaView>
+    <View></View>
   );
 }
 
@@ -49,7 +35,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     textAlign: 'center',
-    color:'white'
+    color: 'white'
   },
   subtitle: {
     fontSize: 18,
