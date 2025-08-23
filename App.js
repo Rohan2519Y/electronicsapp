@@ -1,9 +1,6 @@
-/**
- * Simple Hello World React Native App
- */
-
 import React, { useState } from 'react';
 import TextBox from './components/uicomponents/TextBox'
+import MyButton from './components/uicomponents/MyButton'
 import {
   TextInput,
   StyleSheet,
@@ -11,15 +8,19 @@ import {
   View,
   Text,
   SafeAreaView,
-  Button
 } from 'react-native';
 
 function App() {
-
+  const handleClick=()=>{
+    alert('hi')
+  }
   return (<>
     <View style={{ margin: 10, padding: 10, gap: 10 }}>
-      <TextBox icon="envelope" msg='Email Address' error={false} helperText='Pls Input Correct Value' />
+      <TextBox icon="mail" msg='Email Address' error={false} helperText='Pls Input Correct Value' />
       <TextBox icon="tag" msg='Your Name' error={false} helperText='Pls Input Correct Value' />
+      <TextBox icon="lock" password={true} msg='Enter Password' error={false} helperText='Pls Input Correct Value' />
+      <TextBox icon="lock" msg='Enter Mobile Number' error={false} type='phone-pad' helperText='Pls Input Correct Value' />
+      <MyButton msg='Login' onPress={handleClick}/>
     </View>
   </>);
 }
