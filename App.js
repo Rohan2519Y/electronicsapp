@@ -17,8 +17,9 @@ import {
 function App() {
 
   return (<>
-    <View style={{ margin: 10, padding: 10 }}>
-      <TextBox icon="envelope" msg='Email Address' error="true" helperText='Pls Input Correct Value' />
+    <View style={{ margin: 10, padding: 10, gap: 10 }}>
+      <TextBox icon="envelope" msg='Email Address' error={false} helperText='Pls Input Correct Value' />
+      <TextBox icon="tag" msg='Your Name' error={false} helperText='Pls Input Correct Value' />
     </View>
   </>);
 }
