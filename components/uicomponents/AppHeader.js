@@ -1,12 +1,16 @@
-import React, {useState, useEffect, useSyncExternalStore} from 'react';
-import {Image, Dimensions, View} from 'react-native';
+import React, { useState, useEffect, useSyncExternalStore } from 'react';
+import { Image, Dimensions, View } from 'react-native';
 import MCI from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useNavigation} from '@react-navigation/native';
-import {DrawerActions} from '@react-navigation/native';
-const {width, height} = Dimensions.get('window');
+import { useNavigation } from '@react-navigation/native';
+import { DrawerActions } from '@react-navigation/native';
+const { width, height } = Dimensions.get('window');
 
 export default function AppHeader(props) {
   var navigation = useNavigation();
+
+  const handleDrawer = () => {
+
+  }
   return (
     <View>
       <View
@@ -23,10 +27,11 @@ export default function AppHeader(props) {
         <MCI
           name="menu"
           size={24}
-          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+          style={{ marginLeft: 5 }}
         />
         <Image
-          style={{resizeMode: 'contain', width: 80, height: 80}}
+          style={{ resizeMode: 'contain', width: 80, height: 80 }}
           source={require('../../assets/logo.png')}
         />
         <MCI name="account" size={24} />
