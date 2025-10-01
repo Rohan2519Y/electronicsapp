@@ -26,7 +26,7 @@ export default function TextBox({ w = .9, helperText = '', msg = '', type = 'tex
         <View>
             <View style={{ flexDirection: 'row', alignItems: 'center', borderRadius: 5, padding: 2, width: width * w, borderWidth: 1, borderColor: error ? '#ff4757' : color, backgroundColor: '#fff', }}>
                 <Icon name={icon} size={30} />
-                <TextInput secureTextEntry={!showPassword} onFocus={() => { setColor('darkgreen') }} onBlur={() => { setColor('grey') }} {...props} keyboardType={type} placeholder={msg} placeholderTextColor='grey' style={{ color: '#000', fontSize: 16, width: password ? '80%' : '100%' }} />
+                <TextInput secureTextEntry={password ? !showPassword : false}  onFocus={() => { setColor('darkgreen') }} onBlur={() => { setColor('grey') }} {...props} keyboardType={type} placeholder={msg} placeholderTextColor='grey' style={{ color: '#000', fontSize: 16, width: password ? '80%' : '100%' }} />
                 {password ? <Icon onPress={handleEyeClick} style={{ marginLeft: 'auto', marginRight: 10 }} size={22} name={eyeIcon} /> : <></>}
             </View>
             {error ? <Text style={{ color: '#ff4757' }}>{helperText}</Text> : <></>}
