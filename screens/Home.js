@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { serverURL, getData } from '../services/FetchNodeServices'
 import { useEffect, useState } from "react";
 import SliderComponent from '../components/uicomponents/SliderComponent'
+import SearchBar from '../components/uicomponents/SearchBar'
 export default function Home(props) {
   const [category, setCategory] = useState([])
   const fetchCategoryList = async () => {
@@ -13,6 +14,9 @@ export default function Home(props) {
   useEffect(function () { fetchCategoryList() }, [])
   return (
     <View style={styles.container}>
+      <View style={{alignItems:'center',marginTop:10}}>
+        <SearchBar />
+      </View>
       <SliderComponent data={category} />
     </View>)
 }
@@ -20,6 +24,6 @@ export default function Home(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#000000'
+    backgroundColor: '#000000'
   }
 })

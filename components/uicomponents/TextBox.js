@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, TextInput, StyleSheet, Dimensions, Text } from "react-native";
-import Icon from "react-native-vector-icons/Entypo"
+import Icon from "react-native-vector-icons/EvilIcons"
 const { width, height } = Dimensions.get('window')
 const style = StyleSheet.create({
     container: {

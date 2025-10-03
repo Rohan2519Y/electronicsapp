@@ -6,11 +6,7 @@ import { DrawerActions } from '@react-navigation/native';
 const { width, height } = Dimensions.get('window');
 
 export default function AppHeader(props) {
-  var navigation = useNavigation();
-
-  const handleDrawer = () => {
-
-  }
+  var navigation = useNavigation()
   return (
     <View>
       <View
