@@ -5,14 +5,13 @@ import Carousel from "react-native-reanimated-carousel";
 const { width, height } = Dimensions.get("window");
 
 export default function MainSlider({ data }) {
-    // Convert string -> array of filenames
     const images = data?.files ? data.files.split(",") : [];
 
     return (
-        <View style={{ width: width }}>
+        <View style={{ width: width, height: 160 }}>
             <Carousel
                 autoPlay
-                autoPlayInterval={2000}
+                autoPlayInterval={4000}
                 data={images}
                 height={width / 2}
                 loop
@@ -21,10 +20,10 @@ export default function MainSlider({ data }) {
                 width={width}
                 scrollAnimationDuration={1000}
                 renderItem={({ item }) => (
-                    <View style={{ flex: 1  ,borderWidth:1,justifyContent:'center' }}>
+                    <View style={{ flex: 1, borderWidth: 1, justifyContent: 'center' }}>
                         <Image
                             source={{ uri: `${serverURL}/images/${item}` }}
-                            style={{ width: width, height: height/2, resizeMode: "contain" }}
+                            style={{ width: width, height: height / 2, resizeMode: "contain" }}
                         />
                     </View>
                 )}
