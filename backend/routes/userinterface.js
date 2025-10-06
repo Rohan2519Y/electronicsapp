@@ -43,6 +43,7 @@ router.get("/display_all_category", function (req, res, next) {
 
 router.post("/display_all_products_by_status", function (req, res) {
   try {
+    console.log(req.body)
     pool.query(
       "select P.*, (select C.categoryname from category C where C.categoryid = P.categoryid) as categoryname, (select B.brandname from brands B where B.brandid = P.brandid) as brandname, (select Pr.productname from products Pr where Pr.productid = P.productid) as productname,(select Pr.picture from products Pr where Pr.productid = P.productid) as productpicture from productdetails P where P.status=?",
       [req.body.status],

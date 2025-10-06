@@ -1,15 +1,17 @@
-import { View, Text, StyleSheet } from "react-native";
-import { serverURL, getData } from '../services/FetchNodeServices'
+import { View, Text, StyleSheet, ScrollViewComponent, ScrollView } from "react-native";
+import { serverURL, getData, postData } from '../services/FetchNodeServices'
 import { useEffect, useState } from "react";
 import SliderComponent from '../components/uicomponents/SliderComponent'
 import SearchBar from '../components/uicomponents/SearchBar'
 import MainSlider from '../components/uicomponents/MainSlider'
 import BrandComponent from '../components/uicomponents/BrandComponent'
+import ShowProduct from '../components/uicomponents/ShowProduct'
 export default function Home(props) {
 
   const [category, setCategory] = useState([])
   const [banners, setBanners] = useState([])
   const [brands, setBrands] = useState([])
+  const [product, setProduct] = useState([])
 
   const fetchCategoryList = async () => {
     var result = await getData('userinterface/display_all_category')
@@ -25,15 +27,20 @@ export default function Home(props) {
     var result = await getData('userinterface/display_all_brands')
     setBrands(result.data)
   }
+  const fetchAllProducts = async (product) => {
+    var result = await postData('userinterface/display_all_products_by_status', { status: product })
+    setProduct(result.data)
+  }
 
   useEffect(function () {
     fetchCategoryList()
     fetchAllBanner()
     fetchAllBrands()
+    fetchAllProducts('Trending')
   }, [])
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={{ alignItems: 'center', marginTop: 10 }}>
         <SearchBar />
       </View>
@@ -44,7 +51,10 @@ export default function Home(props) {
       <View>
         <BrandComponent data={brands} />
       </View>
-    </View>)
+      <View>
+        <ShowProduct data={product} title={product[0]?.status} />
+      </View>
+    </ScrollView>)
 }
 
 const styles = StyleSheet.create({
