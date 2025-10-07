@@ -52,7 +52,7 @@ router.post("/display_all_products_by_status", function (req, res) {
           console.log(error);
           res.json({ status: false, message: "Database Error!" });
         } else {
-          console.log(result);
+          // console.log(result);
           res.json({ status: true, data: result });
         }
       }
@@ -184,10 +184,10 @@ router.post("/order_submit", function (req, res) {
 
 router.post("/product_filter", function (req, res) {
   try {
-    var q=`select P.productname,P.picture as mainpicture,PD.*,B.* from productdetails PD, products P,brands B where B.brandid=P.brandid and B.brandid=PD.brandid and B.categoryid=P.categoryid and B.categoryid=PD.categoryid and PD.productid=P.productid and (PD.modelno like '%${req.body.text}%' or P.productname like '%${req.body.text}%' or B.brandname like '%${req.body.text}%')`
+    var q = `select P.productname,P.picture as mainpicture,PD.*,B.* from productdetails PD, products P,brands B where B.brandid=P.brandid and B.brandid=PD.brandid and B.categoryid=P.categoryid and B.categoryid=PD.categoryid and PD.productid=P.productid and (PD.modelno like '%${req.body.text}%' or P.productname like '%${req.body.text}%' or B.brandname like '%${req.body.text}%')`
     console.log(q)
     pool.query(q,
-       function (error, result) {
+      function (error, result) {
         if (error) {
           console.log(error);
           res.json({ status: false, message: "Database Error!" });
