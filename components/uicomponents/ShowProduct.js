@@ -13,7 +13,7 @@ export default function ShowProduct({ data, title }) {
 
     const ProductView = ({ item }) => {
         return (
-            <TouchableOpacity activeOpacity={0.5} onPress={()=>handleNavigate(item)}>
+            <TouchableOpacity activeOpacity={0.5} onPress={() => handleNavigate(item)}>
                 <View style={{ width: width * .45, height: 250, marginVertical: 10, backgroundColor: '#2c3e50', borderRadius: 10, justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginRight: width * .025, marginLeft: width * .025 }}>
                     <View style={{ width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}>
                         <Image style={{ height: height * 0.15, width: width * .6, resizeMode: 'contain' }}
@@ -35,6 +35,8 @@ export default function ShowProduct({ data, title }) {
             </TouchableOpacity>
         )
     }
+
+
 
     return (<View style={{ marginTop: 10 }}>
         <Text style={{ marginTop: 5, marginBottom: 5, marginLeft: width * .03, fontWeight: 'bold', fontSize: 20, color: '#ffffff' }}>{title}</Text>

@@ -62,6 +62,19 @@ export default function ProductDetails({ route }) {
     )
   }
 
+  const MyButton = () => {
+    return (<View>
+      <View style={{ width: '100%', height: 50, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+        <TouchableOpacity activeOpacity={0.7} style={{ width: '45%', height: '90%', justifyContent: 'center', alignItems: 'center', backgroundColor: '#00e9bf', borderRadius: 10 }}>
+          <Text style={{ color: '#000000', fontWeight: 'bold', fontSize: 17 }}>Buy Now</Text>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.7} style={{ width: '45%', height: '90%', justifyContent: 'center', alignItems: 'center', backgroundColor: '#192a56', borderRadius: 10 }}>
+          <Text style={{ color: '#ffffff', fontWeight: 'bold', fontSize: 17 }}>Add To Cart</Text>
+        </TouchableOpacity>
+      </View>
+    </View>)
+  }
+
   return (
     <View style={{ width: width, height: height, backgroundColor: '#191919' }}>
       {BigImage()}
@@ -74,6 +87,7 @@ export default function ProductDetails({ route }) {
         />
       </View>
       {Details()}
+      {MyButton()}
     </View>
   )
 }
