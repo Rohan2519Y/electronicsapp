@@ -3,12 +3,12 @@ import { serverURL } from "../../services/FetchNodeServices";
 var { width, height } = Dimensions.get('window')
 import Icon from "react-native-vector-icons/FontAwesome5"
 import { useNavigation } from '@react-navigation/native';
-export default function ShowProduct({ data, title }) {
+export default function ShowProduct({ data, title, props }) {
 
     const navigation = useNavigation()
     const dis = (op, dp) => (((op - dp) / op) * 100).toFixed(2)
     const handleNavigate = (item) => {
-        navigation.navigate('productdetails', { item })
+        navigation.navigate('productdetails', { item, props })
     }
 
     const ProductView = ({ item }) => {

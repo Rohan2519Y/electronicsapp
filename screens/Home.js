@@ -52,7 +52,7 @@ export default function Home(props) {
         <BrandComponent data={brands} />
       </View>
       <View>
-        <ShowProduct data={product} title={product[0]?.status} />
+        <ShowProduct props={props} data={product} title={product[0]?.status} />
       </View>
     </ScrollView>)
 }

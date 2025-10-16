@@ -95,7 +95,7 @@ export default function RootNavigator() {
         <Stack.Screen
           component={ProductDetails}
           name="productdetails"
-          options={{ headerShown: false }}
+          options={{ header: AppHeader }}
         />
         <Stack.Screen
           component={Cart}

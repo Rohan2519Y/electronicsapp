@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, FlatList, Image, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, Dimensions, FlatList, Image, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
 const { width, height } = Dimensions.get('window');
 import Feather from 'react-native-vector-icons/Feather'
 import { serverURL } from "../services/FetchNodeServices";
@@ -6,16 +6,46 @@ import { useState, useEffect } from "react";
 import ProductColorDetails from '../components/uicomponents/ProductColorDetails';
 import RenderHtml from 'react-native-render-html';
 import PlusMinus from '../components/uicomponents/PlusMinus'
+import { useDispatch } from "react-redux";
 
 export default function ProductDetails({ route }) {
-  const { item } = route.params;
+  const { item, props } = route.params;
   const image = item.picture.split(',')
   const [slide, setSlide] = useState('')
   const [num, setNum] = useState(0)
+  var dispatch = useDispatch()
   console.log('itemm', item)
+  console.log('props', props)
   useEffect(() => {
     setSlide(image[0])
   }, []);
+
+  const handleQtyChange = (value) => {
+    // alert(value)
+    if (value == 0) {
+      dispatch({ type: 'REMOVE_PRODUCT', payload: [item.productdetailsid, item] })
+    }
+    else {
+      item['qty'] = value
+      dispatch({ type: 'ADD_PRODUCT', payload: [item.productdetailsid, item] })
+    }
+    props.navigation.setParams('xxxxxx');
+  }
+
+  const handlePlus = () => {
+    const newVal = num + 1;
+    setNum(newVal);
+    handleQtyChange(newVal);
+  };
+
+  const handleMinus = () => {
+    if (num > 0) {
+      const newVal = num - 1;
+      setNum(newVal);
+      handleQtyChange(newVal);
+    }
+  };
+
 
   const BigImage = () => {
     return (
@@ -77,28 +107,51 @@ export default function ProductDetails({ route }) {
             <Text style={{ color: '#000000', fontWeight: 'bold', fontSize: 17 }}>Buy Now</Text>
           </TouchableOpacity>
           {num == 0 ?
-            < TouchableOpacity onPress={() => { setNum(1) }} activeOpacity={0.7} style={{ width: '45%', height: '90%', justifyContent: 'center', alignItems: 'center', backgroundColor: '#192a56', borderRadius: 10 }}>
+            < TouchableOpacity onPress={handlePlus} activeOpacity={0.7} style={{ width: '45%', height: '90%', justifyContent: 'center', alignItems: 'center', backgroundColor: '#192a56', borderRadius: 10 }}>
               <Text style={{ color: '#ffffff', fontWeight: 'bold', fontSize: 17 }}>Add To Cart</Text>
-            </TouchableOpacity> : <PlusMinus num={num} setNum={setNum} />}
+            </TouchableOpacity> : <PlusMinus num={num} setNum={setNum} handlePlus={handlePlus} handleMinus={handleMinus} />}
         </View>
       </View >
     )
   }
 
   return (
-    <View style={{ width: width, height: height, backgroundColor: '#191919' }}>
-      <ScrollView>
-        {BigImage()}
-        <View>
-          <FlatList
-            horizontal
-            data={image}
-            renderItem={({ item }) => <ImageView item={item} />}
-            keyExtractor={item => item.productdetailsid} />
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#191919' }}>
+      <View style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 90 }}>
+          {BigImage()}
+          <View>
+            <FlatList
+              horizontal
+              data={image}
+              renderItem={({ item }) => <ImageView item={item} />}
+              keyExtractor={(_, index) => index.toString()}
+            />
+          </View>
+          {Details()}
+        </ScrollView>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 70,
+            backgroundColor: '#191919',
+            borderTopWidth: 1,
+            borderTopColor: '#333',
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: -2 },
+            shadowOpacity: 0.3,
+            shadowRadius: 3,
+            elevation: 8,
+          }}>
+          {MyButton()}
         </View>
-        {Details()}
-      </ScrollView>
-      {MyButton()}
-    </View>
-  )
+      </View>
+    </SafeAreaView>
+  );
 }
