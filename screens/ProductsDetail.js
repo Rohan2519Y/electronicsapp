@@ -14,8 +14,8 @@ export default function ProductDetails({ route }) {
   const [slide, setSlide] = useState('')
   const [num, setNum] = useState(0)
   var dispatch = useDispatch()
-  console.log('itemm', item)
-  console.log('props', props)
+  // console.log('itemm', item)
+  // console.log('props', props)
   useEffect(() => {
     setSlide(image[0])
   }, []);

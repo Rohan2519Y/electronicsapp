@@ -18,10 +18,12 @@ export default function RootReducer(state = initialState, action) {
             delete state.mycart[action.payload[0]]
             console.log("STATE:", state.mycart)
             return { mycart: state.mycart, user: state.user }
+
         case "ADD_USER":
             state.user[action.payload[0]] = action.payload[1]
             console.log("STATE:", state.user)
             return { mycart: state.mycart, user: state.user }
+            
         default:
             return { mycart: state.mycart, user: state.user }
     }
