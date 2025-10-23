@@ -2,6 +2,9 @@ import { View, Text, Dimensions, FlatList, Image, TouchableOpacity, SafeAreaView
 import { useSelector, useDispatch } from 'react-redux';
 import { serverURL } from "../services/FetchNodeServices";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { checkSyncData } from '../storage/AsyncDataStorage'
+
 const { width, height } = Dimensions.get('window')
 
 export default function Cart(props) {
@@ -9,6 +12,7 @@ export default function Cart(props) {
   const data = Object.values(cartItems)
   const dispatch = useDispatch()
   const [refresh, setRefresh] = useState(false)
+  const navigation = useNavigation()
 
   const handleRemove = (id) => {
     dispatch({ type: "REMOVE_PRODUCT", payload: [id] });
@@ -27,7 +31,21 @@ export default function Cart(props) {
 
   var netAmount = totalAmount - totalSaving
 
-  return (
+  const handlePress = async () => {
+    var key = await checkSyncData()
+    if (key) {
+      alert('payment gateway')
+    }
+    else {
+      navigation.navigate('loginscreen')
+    }
+
+  }
+
+  return (<>{data.length == 0 ?
+    <View style={{ width: '100%', height: height, backgroundColor: '#f9f9f9', justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ color: '#000000', fontSize: 20, fontWeight: 'bold' }}>No Items</Text>
+    </View> :
     <View style={{ width: '100%', height: height, backgroundColor: '#f9f9f9' }}>
       <View style={{ width: '100%', height: 40, justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#34495e', paddingHorizontal: 20, flexDirection: 'row' }}>
         <Text style={{ color: '#ecf0f1', fontSize: 26 }}>Cart</Text>
@@ -78,7 +96,7 @@ export default function Cart(props) {
                   <Text style={{ fontSize: 18 }}>Total</Text>
                   <Text style={{ fontSize: 18 }}>₹ {netAmount}.00</Text>
                 </View>
-                <TouchableOpacity activeOpacity={0.7} style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#00e9bf', width: '90%', height: '17%', borderRadius: 10, }}>
+                <TouchableOpacity onPress={handlePress} activeOpacity={0.7} style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#00e9bf', width: '90%', height: '17%', borderRadius: 10, }}>
                   <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Checkout</Text>
                 </TouchableOpacity>
               </View>
@@ -87,5 +105,5 @@ export default function Cart(props) {
         </ScrollView>
       </SafeAreaView>
     </View>
-  )
+  }</>)
 }
