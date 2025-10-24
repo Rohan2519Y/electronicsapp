@@ -18,7 +18,7 @@ export default function LoginScreen() {
         // else
         //     navigation.navigate('logindetails', { data: result.data, mobile })
 
-        navigation.navigate('logindetails')
+        navigation.navigate('otpinput')
     }
 
     return (

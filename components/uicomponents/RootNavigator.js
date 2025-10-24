@@ -16,6 +16,7 @@ import Cart from "../../screens/Cart";
 import AppHeader from "./AppHeader";
 import LoginScreen from '../../screens/LoginScreen'
 import LoginDetails from '../../screens/LoginDetails'
+import OtpInput from '../../screens/OtpInput'
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -112,6 +113,11 @@ export default function RootNavigator() {
         <Stack.Screen
           component={LoginDetails}
           name='logindetails'
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          component={OtpInput}
+          name='otpinput'
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
