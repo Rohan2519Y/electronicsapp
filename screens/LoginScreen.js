@@ -13,11 +13,12 @@ export default function LoginScreen() {
     const handlePress = async () => {
         var result = await postData('useraccount/check_account', { mobileno: mobile })
 
-        if (result.status)
-            // navigation.navigate('logindetails', { data: result.data })
-            alert(result.message)
-        else
-            navigation.navigate('logindetails', { data: result.data, mobile })
+        // if (result.status)
+        //     navigation.navigate('logindetails', { data: result.data })
+        // else
+        //     navigation.navigate('logindetails', { data: result.data, mobile })
+
+        navigation.navigate('logindetails')
     }
 
     return (
@@ -38,7 +39,7 @@ export default function LoginScreen() {
             >
                 <Icon name="mobile1" size={30} color="#000" />
                 <TextInput
-                    keyboardType="default"
+                    keyboardType='numeric'
                     value={mobile}
                     onChangeText={setMobile}
                     style={{ flex: 1, fontSize: 18, color: "#000", paddingVertical: 0 }}

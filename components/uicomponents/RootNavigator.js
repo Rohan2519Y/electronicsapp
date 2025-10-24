@@ -15,6 +15,7 @@ import ProductDetails from "../../screens/ProductsDetail";
 import Cart from "../../screens/Cart";
 import AppHeader from "./AppHeader";
 import LoginScreen from '../../screens/LoginScreen'
+import LoginDetails from '../../screens/LoginDetails'
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -106,6 +107,11 @@ export default function RootNavigator() {
         <Stack.Screen
           component={LoginScreen}
           name="loginscreen"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          component={LoginDetails}
+          name='logindetails'
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
