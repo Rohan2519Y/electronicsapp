@@ -6,7 +6,7 @@ var pool = require('./pool')
 /* GET home page. */
 router.post('/submit_useraccount',function(req,res,next) {
     try{ 
-    pool.query('insert into useraccount (emailid,mobileno,username,address,pincode) value(?,?,?,?,?)',[req.body.emailid,req.body.mobileno,req.body.username,req.body.address,req.body.pincode,],function(error,result){
+    pool.query('insert into useraccount (emailid,mobileno,username,address,pincode) value(?,?,?,?,?)',[req.body.emailid,req.body.mobileno,req.body.username,req.body.address,req.body.pincode],function(error,result){
         if(error)
         { console.log("error",error)
          res.status(200).json({status:false,message:'Database error,please connect the database admin'})

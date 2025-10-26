@@ -10,16 +10,14 @@ export default function LoginScreen() {
     const [mobile, setMobile] = useState("");
     const navigation = useNavigation()
 
-    const handlePress = async () => {
-        var result = await postData('useraccount/check_account', { mobileno: mobile })
+    // const handlePress = async () => {
+    //     var result = await postData('useraccount/check_account', { mobileno: mobile })
 
-        // if (result.status)
-        //     navigation.navigate('logindetails', { data: result.data })
-        // else
-        //     navigation.navigate('logindetails', { data: result.data, mobile })
-
-        navigation.navigate('otpinput')
-    }
+    //     if (result.status)
+    //         navigation.navigate('otpinput', { data: result.data, flag: true })
+    //     else
+    //         navigation.navigate('otpinput', { data: result.data, mobile, flag: false })
+    // }
 
     return (
         <View style={{ width: "100%", height: height, backgroundColor: "#2C3A47", alignItems: "center" }}>
@@ -50,7 +48,7 @@ export default function LoginScreen() {
             </View>
 
             <TouchableOpacity
-                onPress={handlePress}
+                onPress={() => navigation.navigate('otpinput', { mobile })}
                 disabled={mobile.length === 0}
                 activeOpacity={0.7}
                 style={{

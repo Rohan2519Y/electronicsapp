@@ -1,9 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, TextInput, StyleSheet, Text, Dimensions, TouchableOpacity, Alert } from 'react-native';
+import { postData } from '../services/FetchNodeServices';
+import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
-const OtpInput = ({ length = 4, onChangeOtp }) => {
+const OtpInput = ({ length = 4, onChangeOtp, route }) => {
+
+  const navigation = useNavigation()
+  const { mobile } = route.params
 
   const [otp, setOtp] = useState(Array(length).fill(''));
   const [finalOtp, setFinalOtp] = useState('');
@@ -33,16 +38,25 @@ const OtpInput = ({ length = 4, onChangeOtp }) => {
     }
   };
 
-  const handlePress = () => {
+  const handlePress = async () => {
     if (finalOtp.toString() === otp.join('')) {
-      Alert.alert('✅ Correct OTP');
-    } else {
+      var result = await postData('useraccount/check_account', { mobileno: mobile })
+      if (result.status) {
+        Alert.alert('✅ Correct OTP');
+        // navigation.navigate('logindetails', { data: result.data })
+      }
+      else {
+        navigation.navigate('logindetails', { data: result.data, mobile })
+      }
+    }
+    else {
       Alert.alert('❌ Wrong OTP');
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>OTP sent to {mobile}</Text>
       <Text style={styles.title}>Enter OTP</Text>
 
       <View style={styles.inputRow}>
