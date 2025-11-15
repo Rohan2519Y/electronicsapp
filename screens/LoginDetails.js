@@ -3,7 +3,8 @@ import { Dimensions, Text, TextInput, TouchableOpacity, View } from "react-nativ
 const { width, height } = Dimensions.get('window')
 import Icon from 'react-native-vector-icons/Feather'
 import { postData } from "../services/FetchNodeServices";
-import { storeDatasync } from "../storage/AsyncDataStorage";
+import { checkSyncData, getSyncData, storeDatasync } from "../storage/AsyncDataStorage";
+import { useNavigation } from "@react-navigation/native";
 
 export default function LoginDetails({ route }) {
 
@@ -14,14 +15,18 @@ export default function LoginDetails({ route }) {
     const [email, setEmail] = useState('')
     const [address, setAddress] = useState('')
     const [pin, setPin] = useState('')
+    const navigation = useNavigation()
 
     const handlePress = async () => {
         var body = { emailid: email, mobileno: mobile, username: first + ' ' + last, address: address, pincode: pin }
         var res = await postData('useraccount/submit_useraccount', body)
-        if (res.status)
+        if (res.status) {
             await storeDatasync(mobile, JSON.stringify(body))
+            navigation.navigate('cart')
+        }
         else alert('not submitted')
     }
+
 
     return (
         <View style={{ width: '100%', height: height, backgroundColor: '#0a3d62', alignItems: 'center' }}>

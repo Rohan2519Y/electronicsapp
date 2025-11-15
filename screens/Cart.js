@@ -1,9 +1,10 @@
 import { View, Text, Dimensions, FlatList, Image, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import { serverURL } from "../services/FetchNodeServices";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { checkSyncData } from '../storage/AsyncDataStorage'
+import { checkSyncData, getSyncData } from '../storage/AsyncDataStorage'
+import RazorpayCheckout from 'react-native-razorpay';
 
 const { width, height } = Dimensions.get('window')
 
@@ -12,6 +13,8 @@ export default function Cart(props) {
   const data = Object.values(cartItems)
   const dispatch = useDispatch()
   const [refresh, setRefresh] = useState(false)
+  const [btn, setBtn] = useState('Continue')
+  const [userData, setUserData] = useState({})
   const navigation = useNavigation()
 
   const handleRemove = (id) => {
@@ -31,14 +34,53 @@ export default function Cart(props) {
 
   var netAmount = totalAmount - totalSaving
 
+  useEffect(async () => {
+    var key = await checkSyncData()
+    if (key) {
+      setUserData(data)
+      setBtn("Checkout")
+    }
+    else {
+      setBtn("Continue")
+    }
+  }, [])
+
+  // console.log('syncdata', getSyncData(mobile))
   const handlePress = async () => {
     var key = await checkSyncData()
     if (key) {
-      alert('payment gateway')
+      makePayment()
     }
     else {
       navigation.navigate('loginscreen')
     }
+  }
+
+  const makePayment = async () => {
+    var options = {
+      description: 'Credits towards consultation',
+      image: 'http://localhost:5000/images/logo.png',
+      currency: 'INR',
+      key: "rzp_test_GQ6XaPC6gMPNwH", // Your api key
+      amount: netAmount * 100,
+      name: userData?.username,
+      prefill: {
+        email: userData?.emailid,
+        contact: userData?.mobileno,
+        name: userData?.username
+      },
+      theme: { color: '#F37254' }
+    }
+    RazorpayCheckout.open(options).then((data) => {
+      // handle success
+      alert(`Success: ${data.razorpay_payment_id}`);
+      dispatch({ type: 'CLEAR_CART', payload: [] })
+
+
+    }).catch((error) => {
+      // handle failure
+      alert(`Error: ${error.code} | ${error.description}`);
+    });
 
   }
 
@@ -97,7 +139,7 @@ export default function Cart(props) {
                   <Text style={{ fontSize: 18 }}>₹ {netAmount}.00</Text>
                 </View>
                 <TouchableOpacity onPress={handlePress} activeOpacity={0.7} style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#00e9bf', width: '90%', height: '17%', borderRadius: 10, }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Checkout</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{btn}</Text>
                 </TouchableOpacity>
               </View>
             </View>
